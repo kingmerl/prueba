@@ -1,0 +1,383 @@
+<title>{% block title %} Producto {% endblock %} </title>
+{% block customCSS %}
+<!-- Booststrap-->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<!-- Custom CSS-->
+
+<!-- Favicon -->
+<link href="img/favicon.ico" rel="icon">
+
+<!-- Google Web Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Roboto:wght@500;700&display=swap"
+    rel="stylesheet">
+
+<!-- Icon Font Stylesheet -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+
+<!-- Libraries Stylesheet -->
+<!--link rel="stylesheet" href="{{ url_for('static',filename='lib/owlcarousel/assets/owl.carousel.min.css')}}"-->
+<link href="static/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+<link href="static/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+
+<link rel="stylesheet" href="{{ url_for('static',filename='/css/style.css')}}">
+<!-- Customized Bootstrap Stylesheet ->
+<link href="static/css/bootstrap.min.css" rel="stylesheet"-->
+<link rel="stylesheet" href="{{ url_for('static',filename='/css/bootstrap.min.css')}}">
+
+<script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+
+
+{% endblock %}
+
+{% block body %}
+<!--script>
+    $(document).ready(function (){
+        $('#save').on("click",function(e){
+            e.preventDefault();
+            var nombre = $('#nombre').val();
+            var descripcion = $('#descripcion').val();
+
+            var obj = [{ "nombre": nombre},{"descripcion":descripcion}]
+                $.ajax({
+                    type: 'POST',
+                    url: "{{url_for('add_categoriajx')}}",
+                    data: {nombre, descripcion},
+                    contentType: 'application/json;charset=UTF-8',
+                    
+                    success:function(result){
+                        console.log("Resultado:");
+                        console.log(result);
+                    },
+                    dataType: 'html'
+                });
+                
+            
+        });
+    });
+</script-->
+
+<div class="container-fluid position-relative d-flex p-0">
+    <div id="spinner" class="show bg-dark position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    <div class="sidebar bg-secondary pe-4 pb-3">
+        <nav class="navbar bg-secondary navbar-dark">
+            <a href="{{ url_for('home')}}" class="navbar-brand mx-4 mb-3">
+                <img class="mb-4" src="{{ url_for('static', filename='img/logofi.png') }}" alt="" width="90" height="80">
+                <span><h5>{{ current_user.rol }}</h5></span>
+            </a>
+
+            <div class="navbar-nav w-100">
+                <a href="{{ url_for('home')}}" class="nav-item nav-link "><i class="fa fa-tachometer-alt me-2"></i>Inicio</a>
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-shopping-cart me-2"></i>Ventas</a>
+                    <div class="dropdown-menu bg-transparent border-0">
+                        <a href="{{ url_for('venta')}}" class="dropdown-item">Agregar Venta</a>
+                        <a href="{{ url_for('view_venta')}}" class="dropdown-item">Ver Venta</a>
+                    </div>
+                </div>
+
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-cart-plus me-2"></i>Compras</a>
+                    <div class="dropdown-menu bg-transparent border-0">
+                        <a href="{{ url_for('compra')}}" class="dropdown-item">Agregar Compra</a>
+                        <a href="{{ url_for('view_compra')}}" class="dropdown-item">Ver compra</a>
+                    </div>
+                </div>
+
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-address-card me-2"></i>Proveedores</a>
+                    <div class="dropdown-menu bg-transparent border-0">
+                        <a href="{{ url_for('proveedor')}}" class="dropdown-item">Agregar proveedores</a>
+                        <a href="{{ url_for('view_proveedor')}}" class="dropdown-item">Ver proveedores</a>
+                    </div>
+                </div>
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown"><i class=" fa fa-gem me-2"></i>Productos</a>
+                    <div class="dropdown-menu bg-transparent border-0">
+                        <a href="{{ url_for('producto')}}" class="dropdown-item">Agregar productos</a>
+                        <a href="{{ url_for('view_producto')}}" class="dropdown-item">Ver productos</a>
+                    </div>
+                </div>    
+ 
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fas fa-copyright me-2"></i>Marca</a>
+                    <div class="dropdown-menu bg-transparent border-0">
+                        <a href="{{ url_for('marca')}}"  class="dropdown-item">Agregar Marca</a>
+                        <a href="{{ url_for('view_marca')}}" class="dropdown-item">Ver Marcas</a>
+                    </div>
+                </div> 
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fas fa-grip-vertical me-2"></i>Categoria</a>
+                    <div class="dropdown-menu bg-transparent border-0">
+                        <a href="{{ url_for('categoria')}}"  class="dropdown-item">Agregar categoria</a>
+                        <a href="{{ url_for('view_categoria')}}" class="dropdown-item">Ver categorias</a>
+                    </div>
+                </div> 
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fas fa-user-edit me-2"></i>Clientes</a>
+                    <div class="dropdown-menu bg-transparent border-0">
+                        <a href="{{ url_for('cliente')}}" class="dropdown-item">Agregar cliente</a>
+                        <a href="{{ url_for('view_cliente')}}" class="dropdown-item">Ver clientes</a>
+                    </div>
+                </div>  
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class= "fas fa-user-lock me-2"></i>Usuarios</a>
+                    <div class="dropdown-menu bg-transparent border-0">
+                        <a href="{{ url_for('usuario')}}" class="dropdown-item">Agregar usuario</a>
+                        <a href="{{ url_for('view_usuario')}}" class="dropdown-item">Ver usuarios</a>
+                    </div>
+                </div>
+            </div>
+
+        </nav>
+    </div>
+    <div class="content">
+        <nav class="navbar navbar-expand bg-secondary navbar-dark sticky-top px-4 py-0">
+
+            <a href="{{ url_for('home')}}" class="navbar-brand d-flex d-lg-none me-4">
+                    <h2 class="text-primary"><i>B&Roh</i></h2>
+                </a>
+            </a>
+            <a href="#" class="sidebar-toggler flex-shrink-0">
+                <i class="fa fa-bars"></i>
+            </a>
+            <div class="navbar-nav align-items-center ms-auto">
+            <div class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                    <span class="d-none d-lg-inline-flex"><h5>{{ current_user.nombre }}</h5></span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
+                    <a href="{{ url_for('configuracion', id=current_user.id) }}" class="dropdown-item">Mi Perfil</a>
+                    <a href="{{ url_for('logout')}}" class="dropdown-item">Cerrar Sesion</a>
+                </div>
+            </div>
+         </div>
+        </nav>
+{% block content %}
+        <div class="container-fluid pt-4 px-4" >
+            <div class="row ">
+                        <div class="bg-secondarya rounded h-100 p-4">
+                    <h1 class="mb-5">Productos</h1>
+                    {%with messages = get_flashed_messages() %}
+                    {% if messages%}
+                    <br />
+                    {% for message in messages %}
+                    <div class="alert  alert-primary alert-dismissible" role="alert">
+                        <strong>{{ message }}</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"> </button>
+
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                    {% endwith %}
+                    <form action="/add_producto" method="POST">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <div class="conqui">
+                            <div class="inputBox">
+                                <input type="number" name="id_producto" required="">
+                                <label>id Producto</label>
+                            </div>
+                            <div class="inputBox">
+                                <input type="text" name="nombre" required="required">
+                                <label>Nombre</label>
+                            </div>
+                            <div class="inputBox">
+                                <select class="select_a" name="marca" required="requiered">
+                                    <option value="">Marca</option>
+                                    {% for marca in marcas %}
+                                    <option value="{{ marca.1 }}">{{ marca.1 }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <span>
+                                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal1"><i class="fas fa-plus-square"></i></button>
+                            </span>
+                            </div>
+                            <br>
+                            <div class="conqui">
+                            <div class="inputBox">
+                                <select class="select_a" name="categoria" required="requiered">
+                                    <option value="">Categoria</option>
+                                    {% for categoria in categorias %}
+                                    <option value="{{ categoria.1 }}">{{ categoria.1 }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <span>
+                                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal"><i class="fas fa-plus-square"></i></button>
+                            </span>
+                            <div class="inputBox">
+                                <input type="text" name="descripcion" required="required">
+                                <label>Descripcion</label>
+                            </div>
+                            <div class="inputBox">
+                                <input type="number" name="precio" required="required">
+                                <label>Precio</label>
+                            </div>
+
+                            </div>
+                            <br>
+                            <div class="conqui">
+                                <div class="inputBox">
+                                    <input type="text" name="estado" required="required">
+                                    <label>Estado</label>
+                                </div>
+                            </div>
+
+                        <br><br>
+                        <input class="btn btn-primary" type="submit" placeholder="Enviar">
+                        <span></span>
+                        <input class="btn btn-primary" type="reset" placeholder="Limpiar">
+
+
+                    </form>
+                    <!-- Modal -->
+                    <div id="exampleModal" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Agregar categoria</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form method="post" id="insert_form">
+
+                                        <div class="conqui">
+                                            <div class="inputBox">
+                                                <input type="text" id="nombre" name="nombre" required="">
+                                                <label>Nombre Categoria</label>
+                                            </div>
+                                            <div class="inputBox">
+                                                <input type="text" id="descripcion" name="descripcion" required="">
+                                                <label>Descripcion</label>
+                                            </div>
+                                        </div>
+                                        <br><br>
+                                        <input class="btn btn-primary" type="submit" placeholder="Enviar">
+                                        <span></span>
+                                        <input class="btn btn-primary" type="reset" placeholder="Limpiar">
+                                    </form>
+                                    <div id="successAlert" class="alert alert-success" role="alert"
+                                        style="display:none;"></div>
+                                    <div id="errorAlert" class="alert alert-danger" role="alert" style="display:none;">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div id="exampleModal1" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Agregar Marca</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form  action="/add_marcajx" method="POST" >
+                                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                        <div class="conqui">
+                                            <div class="inputBox">
+                                                <input type="text" id="nombre" name="nombre" required="">
+                                                <label>Nombre Marca</label>
+                                            </div>
+                                            <div class="inputBox">
+                                                <input type="text" id="descripcion" name="descripcion" required="">
+                                                <label>Descripcion</label>
+                                            </div>
+                                        </div>
+                                        <br><br>
+                                        <input class="btn btn-primary" type="submit" placeholder="Enviar">
+                                        <span></span>
+                                        <input class="btn btn-primary" type="reset" placeholder="Limpiar">
+                                    </form>
+                                    <div id="successAlert" class="alert alert-success" role="alert"
+                                        style="display:none;"></div>
+                                    <div id="errorAlert" class="alert alert-danger" role="alert" style="display:none;">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endblock %}
+
+    </div>
+</div>
+{% block scripts %}
+
+
+
+
+<!----
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script> -->
+
+<script src="/static/lib/chart/chart.min.js"></script>
+<script src="/static/lib/easing/easing.min.js"></script>
+<script src="/static/lib/waypoints/waypoints.min.js"></script>
+<script src="/static/lib/owlcarousel/owl.carousel.min.js"></script>
+<script src="/static/lib/tempusdominus/js/moment.min.js"></script>
+<script src="/static/lib/tempusdominus/js/moment-timezone.min.js"></script>
+<script src="/static/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+<script src="/static/js/main.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#insert_form').on("submit", function (event) {
+            event.preventDefault();
+            if ($('#nombre').val() == "") {
+                alert("Se requiere nombre");
+            }
+            else if ($('#descripcion').val() == '') {
+                alert("se requiere descripcion");
+            }
+            
+            else {
+                $.ajaxSetup({
+                    cache: 100
+                });
+                $.ajax({
+                    url: "/add_categoriajx",
+
+                    method: "POST",
+                   /* data: {nombre:$('#nombre').val(),descripcion:$('#descripcion').val()},*/
+                   data:$('#insert_form').serialize(),
+                    beforeSend: function () {
+                        $('#insert').val("Inserting");
+                    },
+                    success: function (data) {
+                        $('#exampleModal').modal('hide');
+                        if (data == 'success') {
+                            window.location.href = "/";
+                        }
+                    },
+                    
+                });
+            }
+        });
+    }); 
+</script>
+{% endblock %}
+{% endblock %}

@@ -374,7 +374,7 @@
     });
 
 
-
+    var usuarioid = '{{ current_user.id }}';
     $(document).ready(function () {
         var usuarioid = '{{ current_user.id }}';
         searchForDetalle(usuarioid);
@@ -576,8 +576,8 @@
                         // console.log(response);
 
                         if (response != 'error') {
-                            console.log(response);
-                            //location.reload();
+                            //console.log(response);
+                            location.reload();
                             //var info = JSON.parse(response)
                             //
 
@@ -633,7 +633,7 @@
     function del_producto_detalle(correlativo) {
         var action = 'delForDetalle';
         var id_detalle = correlativo;
-        user = usuarioid;
+        var user = usuarioid;
         $.ajax({
             url: '/delpordetalle',
             type: "POST",

@@ -359,7 +359,7 @@
     });
 
 
-
+    var usuarioid = '{{ current_user.id }}';
     $(document).ready(function () {
         var usuarioid = '{{ current_user.id }}';
         searchForDetalle(usuarioid);
@@ -561,11 +561,11 @@
                         // console.log(response);
 
                         if (response != 'error') {
-                            console.log(response);
-                            //location.reload();
+                            //console.log(response);
+                            location.reload();
 
                             var info = JSON.parse(response)
-                            console.log(info)
+                            //console.log(info)
 
                         } else {
                             console.log('no info')

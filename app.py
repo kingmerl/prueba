@@ -31,10 +31,9 @@ def load_user(id):
     return ModelUser.get_by_id(db,id)
 @app.route('/')
 def index():
-    return 'hola mundo'
+    return redirect(url_for('login'))
 
 @app.route('/login', methods=['GET','POST'])
-
 def login():
     if request.method == 'POST':
         print(request.form['username'])
@@ -1712,6 +1711,5 @@ if __name__ == '__main__':
     app.register_error_handler(401,status_401)
     app.register_error_handler(404,status_404)
     app.secret_key = 'super secret key'
-    app.run()
     app.config['SESSION_TYPE'] = 'filesystem'
-    
+    app.run()

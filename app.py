@@ -34,7 +34,7 @@ def index():
     return redirect(url_for('login'))
 
 @app.route('/login', methods=['GET','POST'])
-@login_required
+
 def login():
     if request.method == 'POST':
         print(request.form['username'])

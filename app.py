@@ -33,6 +33,10 @@ def load_user(id):
 def index():
     return redirect(url_for('login'))
 
+app.route('/pru')
+def pru():
+    return render_template('hola.html')
+
 @app.route('/login', methods=['GET','POST'])
 def login():
     if request.method == 'POST':

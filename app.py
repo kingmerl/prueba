@@ -31,7 +31,7 @@ def load_user(id):
     return ModelUser.get_by_id(db,id)
 @app.route('/')
 def index():
-    return redirect(url_for('login'))
+    return 'hola mundo'
 
 @app.route('/login', methods=['GET','POST'])
 

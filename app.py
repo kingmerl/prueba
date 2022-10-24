@@ -1711,5 +1711,6 @@ if __name__ == '__main__':
     app.register_error_handler(401,status_401)
     app.register_error_handler(404,status_404)
     app.secret_key = 'super secret key'
-    app.config['SESSION_TYPE'] = 'filesystem'
     app.run()
+    app.config['SESSION_TYPE'] = 'filesystem'
+    

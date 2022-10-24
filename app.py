@@ -22,7 +22,7 @@ from models.ModelUser import ModelUser
 #entities
 from models.entities.User import User
 app = Flask(__name__)
-csrf=CSRFProtect()
+csrf=CSRFProtect(app)
 db=MySQL(app)
 
 login_manager_app=LoginManager(app)

@@ -183,7 +183,7 @@
                     {% endif %}
                     {% endwith %}
                     <form action="/add_producto" method="POST">
-                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        
                         <div class="conqui">
                             <div class="inputBox">
                                 <input type="number" name="id_producto" required="">
@@ -293,7 +293,7 @@
                                 </div>
                                 <div class="modal-body">
                                     <form  action="/add_marcajx" method="POST" >
-                                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                       
                                         <div class="conqui">
                                             <div class="inputBox">
                                                 <input type="text" id="nombre" name="nombre" required="">

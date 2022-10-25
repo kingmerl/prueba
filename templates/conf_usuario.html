@@ -138,7 +138,7 @@
                         <div class="bg-secondarya rounded h-100 p-4">
                             <h1 class="mb-5">Usuario</h1>
                             <form action="/edituse/{{ dato.0}}" method="POST">
-                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                               
                                 <div class="conqui">
                                     <div class="inputBox">
                                         <input type="tel"  name="nombre" required="" value="{{ dato.1 }}">
@@ -170,6 +170,10 @@
                                 </div>
                                 <br>
                                 <div class="conqui">
+                                    <div class="inputBox">
+                                        <input type="password"  name="password" required="">
+                                        <label>Contraseña</label>
+                                    </div>
                                     <div class="inputBox">
                                         <input type="text"  name="roll" required="" value="{{ dato.4 }}">
                                         <label>Rol</label>

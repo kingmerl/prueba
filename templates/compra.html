@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <meta meta name="csrf-token" content="{{ csrf_token() }}">
+    
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -217,7 +217,7 @@
                                 </div>
                                 <div class="modal-body">
                                     <form method="post" action="/add_proveedorcompra">
-                                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                        
                                         <div class="conqui">
                                             <div class="inputBox">
                                                 <input type="text" name="nombre" required="required">
@@ -226,7 +226,9 @@
                                             <div class="inputBox">
                                                 <input type="text" name="apellido" required="required">
                                                 <label>Apellido</label>
-                                            </div>
+                                            </div><br><br>
+                                        </div>
+                                        <div class="conqui">
                                             <div class="inputBox">
                                                 <input type="text" name="direccion" required="required">
                                                 <label>Direccion</label>
@@ -288,7 +290,7 @@
                     <div class=" rounded h-100 p-4">
                         <div class="div table-responsive">
                             <table class="table">
-                                <input type="hidden" id="csrf_token" name="csrf_token" value="{{ current_user.id }}">
+                                
                                 <thead>
                                     <tr>
                                         <th width="100px">Codigo</th>
@@ -624,7 +626,7 @@
             url: '/delpordetallec',
             type: "POST",
             async: true,
-            data: { action: action, id_detalle: id_detalle,user:user},
+            data: { action: action, id_detalle: id_detalle, user: user },
             success: function (response) {
                 if (response != 'error') {
                     var info = JSON.parse(response)

@@ -137,7 +137,7 @@
                         <div class="bg-secondarya rounded h-100 p-4">
                             <h1 class="mb-5">Editar Proveedor</h1>
                             <form action="/editpr/{{ dato.0 }}" method="POST">
-                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                
                                 <div class="conqui">
                                     <div class="inputBox">
                                         <input type="text" name="nombre" required="required" value="{{ dato.1 }}">

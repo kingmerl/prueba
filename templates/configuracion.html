@@ -139,7 +139,7 @@
                         <div class="bg-secondarya rounded h-100 p-4">
                             <h1 class="mb-5">Confirguración de Perfil </h1>
                             <form action="/mi_usuario/{{dato.0}}" method="POST">
-                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                
                                 <input type="text" name="nombre" placeholder="Nombre usuario"value="{{ dato.1 }}">
                                 <input type="text" name="apellido" placeholder="Apellido usuario" value="{{ dato.2 }}">
                                 <input type="text" name="usuario" placeholder="Usuario" value="{{ dato.3 }}"><br><br>

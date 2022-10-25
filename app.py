@@ -10,7 +10,7 @@ import psycopg2 #pip install psycopg2
 import psycopg2.extras
 import webbrowser
 from flask_mysqldb import MySQL, MySQLdb
-from flask_wtf.csrf import CSRFProtect
+#from flask_wtf.csrf import CSRFProtect
 from flask_login import LoginManager, login_user, logout_user, login_required
 
 from config import config
@@ -22,7 +22,7 @@ from models.ModelUser import ModelUser
 #entities
 from models.entities.User import User
 app = Flask(__name__)
-csrf=CSRFProtect(app)
+#csrf=CSRFProtect()
 db=MySQL(app)
 
 login_manager_app=LoginManager(app)
@@ -207,8 +207,8 @@ def categoria():
 @app.route('/add_categoria', methods=['GET','POST'])
 def add_categoria():
     if request.method == 'POST':
-        nombre = request.form('nombre')
-        descripcion = request.form('descripcion')
+        nombre = request.form['nombre']
+        descripcion = request.form['descripcion']
         cur = db.connection.cursor()
         cur.execute('INSERT INTO categoria (id, nombre, descripcion) VALUES (%s, %s, %s)',
         (None, nombre, descripcion),)
@@ -300,7 +300,7 @@ def venta():
 
 
 
-@csrf.exempt
+#@csrf.exempt
 @app.route("/sacar_cliente",methods=["POST","GET"])
 def sacar_cliente():
     #cur = db.connection.cursor(MySQLdb.cursors.DictCursor)
@@ -340,7 +340,7 @@ def sacar_cliente():
        # return jsonify("[{'id_cliente': 220001, 'nombre': 'walter', 'apellido': 'pepito', 'direccion': 'ciudad', 'telefono': '15141819', 'email': 'lkjlhjkj@asdfg.com', 'descripcion': 'qwerty qwerty', 'estado': 'Activo', 'fecha': '17/17/2022'}]")
 
 
-@csrf.exempt
+#@csrf.exempt
 @app.route("/sacar_producto",methods=["POST","GET"])
 def sacar_producto():
     #cur = db.connection.cursor(MySQLdb.cursors.DictCursor)
@@ -369,7 +369,7 @@ def sacar_producto():
             #print(data)
         return json.dumps(data[0])
 
-@csrf.exempt
+#@csrf.exempt
 @app.route("/detallejx",methods=["POST","GET"])
 def detallejx():
     if request.method == 'POST':
@@ -452,7 +452,7 @@ def detallejx():
     #print(array)   
     
 #-------------------------
-@csrf.exempt
+#@csrf.exempt
 @app.route("/buscarpordetalle",methods=["POST","GET"])
 def buscarpordetalle():
     if request.method == 'POST':
@@ -535,7 +535,7 @@ def buscarpordetalle():
 
 #--------------------
 
-@csrf.exempt
+#@csrf.exempt
 @app.route("/delpordetalle",methods=["POST","GET"])
 def delpordetalle():
     if request.method == 'POST':
@@ -596,7 +596,7 @@ def delpordetalle():
         return json.dumps('error')
    
 
-@csrf.exempt
+#@csrf.exempt
 @app.route('/anularventa', methods=['GET', 'POST'])
 def anularventa():  
     if request.method == 'POST':  
@@ -609,7 +609,7 @@ def anularventa():
         return json.dumps('No jala')
 
 #procesarventa
-@csrf.exempt
+#@csrf.exempt
 @app.route('/procesarventa', methods=['GET', 'POST'])
 def procesarventa():  
     if request.method == 'POST':
@@ -634,6 +634,7 @@ def procesarventa():
 
             if numrows1 > 0:
                 data=json_data
+                flash("Venta realizada con exito")
                 return json.dumps(data[0])      
             else:
                 return json.dumps('error')    
@@ -649,7 +650,7 @@ def compra():
 
 
 
-@csrf.exempt
+#@csrf.exempt
 @app.route("/sacar_proveedor",methods=["POST","GET"])
 def sacar_proveedor():
     if request.method == 'POST':
@@ -673,7 +674,7 @@ def sacar_proveedor():
             return json.dumps(data[0])
 
 
-@csrf.exempt
+#@csrf.exempt
 @app.route("/detallejxc",methods=["POST","GET"])
 def detallejxc():
     if request.method == 'POST':
@@ -755,7 +756,7 @@ def detallejxc():
     
     #print(array)
 
-@csrf.exempt
+#@csrf.exempt
 @app.route('/anularcompra', methods=['GET', 'POST'])
 def anularcompra():  
     if request.method == 'POST':  
@@ -768,7 +769,7 @@ def anularcompra():
         return json.dumps('No jala')
 
 
-@csrf.exempt
+#@csrf.exempt
 @app.route("/buscarpordetallec",methods=["POST","GET"])
 def buscarpordetallec():
     if request.method == 'POST':
@@ -850,7 +851,7 @@ def buscarpordetallec():
     #print(array)   
     
 
-@csrf.exempt
+#@csrf.exempt
 @app.route("/delpordetallec",methods=["POST","GET"])
 def delpordetallec():
     if request.method == 'POST':
@@ -911,7 +912,7 @@ def delpordetallec():
         return json.dumps('error')
 
 
-@csrf.exempt
+#@csrf.exempt
 @app.route('/procesarcompra', methods=['GET', 'POST'])
 def procesarcompra():  
     if request.method == 'POST':
@@ -936,6 +937,7 @@ def procesarcompra():
 
             if numrows1 > 0:
                 data=json_data
+                flash("Compra realizada con Exito")
                 return json.dumps(data[0])      
             else:
                 return json.dumps('error')    
@@ -1193,6 +1195,8 @@ def edituse(id):
         email = request.form['email']
         usuario = request.form['usuario']
         roll = request.form['roll']
+        contrasena = request.form['password']
+        password = generate_password_hash(contrasena)
         estado = request.form['estado']
         cur = db.connection.cursor()
         cur.execute("""
@@ -1204,9 +1208,10 @@ def edituse(id):
         telefono = %s,
         direccion = %s,
         email = %s,
+        contrasena = %s,
         estado = %s
         WHERE id = %s
-        """, (nombre,apellido,usuario,roll,telefono,direccion,email,estado,[id]))
+        """, (nombre,apellido,usuario,roll,telefono,direccion,email,password,estado,[id]))
         db.connection.commit()
         flash("Datos de usuario actualizados")
         return redirect(url_for('view_usuario'))
@@ -1406,7 +1411,7 @@ def view_ventasearch():
         return redirect(url_for('view_venta')) 
 
 
-@csrf.exempt
+#@csrf.exempt
 @app.route("/seleccioncompra")
 def seleccioncompra():
     #if request.method == 'POST':
@@ -1489,10 +1494,7 @@ def seleccioncompra():
        # return json.dumps('error')
     
     #print(array)   
-
-
-
-@csrf.exempt
+#@csrf.exempt
 @app.route('/selectorcompra')
 def selectorcompra():
     a = json.dumps(res)
@@ -1504,7 +1506,7 @@ def selectorcompra():
 
 #VER LA venta
 
-@csrf.exempt
+#@csrf.exempt
 @app.route("/seleccionventa")
 def seleccionventa():
     #if request.method == 'POST':
@@ -1590,7 +1592,7 @@ def seleccionventa():
 
 
 
-@csrf.exempt
+#@csrf.exempt
 @app.route('/selectorventa')
 def selectorventa():
     a = json.dumps(res)
@@ -1599,7 +1601,7 @@ def selectorventa():
 
 
 
-@csrf.exempt
+#@csrf.exempt
 @app.route('/vercompra')
 def vercompra():
     if request.method == 'POST':
@@ -1648,7 +1650,7 @@ def vercompra():
 
 
 
-@csrf.exempt
+#@csrf.exempt
 @app.route('/ajax')
 def ajax():
     cursor = db.connection.cursor()
@@ -1657,7 +1659,7 @@ def ajax():
     employee = cur.fetchall()   
     return render_template('ajax.html', employee=employee)
 
-@csrf.exempt
+#@csrf.exempt
 @app.route('/insert', methods=['GET', 'POST'])
 def insert():   
     cursor = db.connection.cursor()
@@ -1673,7 +1675,7 @@ def insert():
         
     return jsonify('success')
 
-@csrf.exempt
+#@csrf.exempt
 @app.route('/select', methods=['GET', 'POST'])
 def select():   
     cursor = db.connection.cursor()
@@ -1707,7 +1709,7 @@ def home():
 
 if __name__ == '__main__':
     app.config.from_object(config['development'])
-    csrf.init_app(app)
+    #csrf.init_app(app)
     app.register_error_handler(401,status_401)
     app.register_error_handler(404,status_404)
     app.secret_key = 'super secret key'

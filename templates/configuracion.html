@@ -140,13 +140,13 @@
                             <h1 class="mb-5">Confirguración de Perfil </h1>
                             <form action="/mi_usuario/{{dato.0}}" method="POST">
                                 
-                                <input type="text" name="nombre" placeholder="Nombre usuario"value="{{ dato.1 }}">
-                                <input type="text" name="apellido" placeholder="Apellido usuario" value="{{ dato.2 }}">
-                                <input type="text" name="usuario" placeholder="Usuario" value="{{ dato.3 }}"><br><br>
-                                <input type="text" name="telefono" placeholder="Telefono" value="{{ dato.5 }}">
-                                <input type="text" name="direccion" placeholder="Direccion"value="{{ dato.6 }}">
-                                <input type="email" name="email" placeholder="email"value="{{ dato.7 }}"><br><br>
-                                <input type="password" name="password" placeholder="Password"value=""><br><br>
+                                <input type="text" name="nombre" placeholder="Nombre usuario" required value="{{ dato.1 }}">
+                                <input type="text" name="apellido" placeholder="Apellido usuario" required value="{{ dato.2 }}">
+                                <input type="text" name="usuario" placeholder="Usuario" required value="{{ dato.3 }}"><br><br>
+                                <input type="text" name="telefono" placeholder="Telefono" required value="{{ dato.5 }}">
+                                <input type="text" name="direccion" placeholder="Direccion" required value="{{ dato.6 }}">
+                                <input type="email" name="email" placeholder="email" required value="{{ dato.7 }}"><br><br>
+                                <input type="password" name="password" placeholder= "Password" required value=""><br><br>
                                 <input class="btn btn-primary" type="submit" value="Guardar Cambios">
                                 <span></span>
                                 <input class="btn btn-primary" type="reset" value="Limpiar">

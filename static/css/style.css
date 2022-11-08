@@ -422,7 +422,7 @@
 }
 
 .datos{
-	background-color: #e3ecef;
+	background-color: #bae0cd;
 	display: -webkit-flex;
 	display: -moz-flex;
 	display: -ms-flex;
@@ -436,6 +436,23 @@
     border-radius: 10px;
     margin-top: 10px;
 }
+
+.datosc{
+	background-color: #e0ccba;
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
+	display: flex;
+	display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    border: 2px solid #78909C;
+    padding: 10px;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
 .action_cliente{
 	display: -webkit-flex;
 	display: -moz-flex;
@@ -446,6 +463,9 @@
 }
 
 .datos label{
+	margin: 5px auto;
+}
+.datosc label{
 	margin: 5px auto;
 }
 .wd20{
